@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#5d68ff">
+  <meta name="description" content="指尖箭头大挑战H5重做版。观察箭头方向，依次清空棋盘，浏览器即可试玩。">
+  <title>指尖箭头大挑战 · H5重做版</title>
+  <link rel="icon" type="image/png" href="./assets/images/ArrowHead.png">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main id="game-shell" aria-label="指尖箭头大挑战网页试玩">
+    <canvas id="game-canvas" width="360" height="640" aria-label="箭头棋盘。点击箭头沿其方向移出；拖动棋盘、双指缩放可以观察密集区域。"></canvas>
+    <section id="loading-screen" class="screen loading" aria-live="polite"><div class="loading-mark">↗</div><h1>指尖箭头大挑战</h1><p id="loading-message">正在准备箭头棋盘…</p><div class="loading-bar"><span id="loading-progress"></span></div><button id="loading-retry" class="primary" hidden>重新加载</button></section>
+    <section id="home-screen" class="screen home" hidden>
+      <header class="home-brand"><span class="eyebrow">ARROW PUZZLE</span><h1>指尖箭头<br><em>大挑战</em></h1><p>方向看清楚，出口就在那里。</p></header>
+      <div class="hero-arrows" aria-hidden="true"><svg viewBox="0 0 240 170"><g fill="none" stroke="#17203e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M44 140V30M25 51L44 27L63 51"/><path d="M94 140V100H134V30M115 51L134 27L153 51"/><path d="M194 30V140M175 119L194 143L213 119"/></g><g fill="#cfd3ff"><circle cx="44" cy="159" r="3"/><circle cx="94" cy="159" r="3"/><circle cx="134" cy="159" r="3"/><circle cx="194" cy="159" r="3"/></g></svg></div>
+      <div class="home-actions"><p id="progress-label">主线关卡 1</p><button id="start-button" class="primary">点击开始</button><button id="campaign-button" class="secondary">选择主线关卡</button><p class="edition">H5重做版 · 40个主线关卡<br>原地图扩展图库 · 免费浏览器试玩</p></div>
+      <nav class="bottom-nav" aria-label="页面导航"><button id="challenge-tab"><img src="./assets/images/ChallangeIcon.png" alt=""><span>扩展挑战</span><small id="challenge-status">完成主线第3关解锁</small></button><button id="home-tab" class="selected"><img src="./assets/images/HomeIcon.png" alt=""><span>主页</span></button><button id="settings-tab"><img src="./assets/images/SettingsIcon.png" alt=""><span>设置</span></button></nav>
+    </section>
+    <section id="campaign-screen" class="screen list-screen" hidden><header class="page-heading"><button class="back-home" aria-label="返回主页">‹</button><div><h2>主线关卡</h2><p>沿用原配置的40关顺序</p></div></header><div id="campaign-grid" class="level-grid scroll-content"></div><p class="page-note">通关后解锁下一关，进度仅保存在本浏览器。</p></section>
+    <section id="challenge-screen" class="screen list-screen" hidden><header class="page-heading"><button class="back-home" aria-label="返回主页">‹</button><div><h2>扩展挑战图库</h2><p id="challenge-count">原地图 · H5重建排列</p></div></header><div id="challenge-grid" class="level-grid challenge-grid scroll-content"></div><div class="pagination"><button id="challenge-prev" class="secondary">上一页</button><span id="challenge-page"></span><button id="challenge-next" class="secondary">下一页</button></div><p class="page-note">与40关主线独立，不代表原版后续主线顺序。</p></section>
+    <section id="settings-screen" class="screen settings-screen" hidden><header class="page-heading"><button class="back-home" aria-label="返回主页">‹</button><div><h2>设置</h2><p>轻松玩，安心存</p></div></header><div class="settings-content scroll-content"><button id="music-toggle" class="setting-row" aria-pressed="true"><span>背景音乐</span><strong>开启</strong></button><button id="sound-toggle" class="setting-row" aria-pressed="true"><span>游戏音效</span><strong>开启</strong></button><button id="grid-toggle" class="setting-row" aria-pressed="true"><span>点阵辅助</span><strong>开启</strong></button><button data-legal="privacy" class="setting-row"><span>隐私政策</span><strong>›</strong></button><button data-legal="agreement" class="setting-row"><span>用户协议</span><strong>›</strong></button><button id="how-to-button" class="setting-row"><span>玩法说明</span><strong>›</strong></button><button id="reset-progress" class="setting-row danger"><span>清除本游戏本地进度</span><strong>›</strong></button><button id="exit-button" class="setting-row"><span>退出网页试玩</span><strong>›</strong></button><div class="settings-note"><p>南京郁真信息科技有限公司</p><p>H5重做版。无需登录，不接入Android账号、广告或支付SDK；退出、重试与提示均免费。</p><p>箭头路径、音乐与图片沿用现有工程资源。离场与碰撞逻辑为按原地图结构实现的网页重建规则，不声称恢复原Unity执行源码。</p></div></div></section>
+    <div id="game-ui" hidden>
+      <header class="game-header"><div><span id="mode-label">主线</span><strong id="level-label">关卡 1</strong></div><div id="heart-bar" aria-label="剩余3颗心"><span class="heart"></span><span class="heart"></span><span class="heart"></span></div><button id="pause-button">退出</button></header>
+      <div class="game-stats"><span id="arrows-label">剩余 3 根</span><span id="moves-label">点击 0 次</span></div>
+      <p id="tutorial-message" class="tutorial-message" hidden>点击箭头，让它沿指向移出棋盘</p>
+      <div class="board-tools"><button id="zoom-out" aria-label="缩小棋盘">−</button><button id="zoom-reset">复位</button><button id="zoom-in" aria-label="放大棋盘">＋</button><span id="zoom-label">100%</span></div>
+      <div class="game-actions"><button id="hint-button"><span>✦</span> 提示</button><span>拖动移动 · 双指缩放</span><button id="restart-button"><img src="./assets/images/RetryIcon.png" alt=""> 重开</button></div>
+    </div>
+    <section id="consent-screen" class="modal-screen" hidden role="dialog" aria-modal="true" aria-labelledby="consent-title"><div class="modal-card consent-card"><span class="eyebrow">欢迎体验箭头拼图</span><h2 id="consent-title">隐私与网页试玩说明</h2><div class="legal-copy"><p>《指尖箭头大挑战》H5重做版由南京郁真信息科技有限公司提供。无需注册，当前不接入Android账号、广告或支付SDK。</p><p>进度、设置和同意记录保存在本站的浏览器本地存储，不由游戏主动上传。清理网站数据、隐私浏览、更换浏览器或网址可能丢失记录。</p><p>网页、关卡、音乐与图片需要通过网络从GitHub Pages等静态托管服务加载。托管服务可能记录访问IP、请求时间与浏览器信息。</p><p>请阅读<a href="#" data-legal="privacy">《隐私政策》</a>和<a href="#" data-legal="agreement">《用户协议》</a>。主线40关沿用可恢复原配置，扩展图库与网页碰撞规则属于H5重建实现。未成年人请在监护人指导下体验，合理安排时间。</p></div><button id="agree-button" class="primary">同意并继续</button><button id="decline-button" class="text-button">暂不同意，退出试玩</button></div></section>
+    <section id="legal-screen" class="modal-screen" hidden role="dialog" aria-modal="true" aria-labelledby="legal-title"><div class="modal-card legal-card"><h2 id="legal-title">隐私政策</h2><div id="legal-content" class="legal-copy"></div><button id="legal-close" class="primary">返回</button></div></section>
+    <section id="pause-screen" class="modal-screen" hidden role="dialog" aria-modal="true" aria-labelledby="pause-title"><div class="modal-card compact-card"><h2 id="pause-title">稍作休息</h2><p>观察方向，想好下一步。</p><button id="resume-button" class="primary">继续游戏</button><button id="pause-restart" class="secondary">重新开始本关</button><button id="home-button" class="secondary">返回主页</button><button id="pause-music" class="text-button">音乐：开启</button></div></section>
+    <section id="win-screen" class="modal-screen" hidden role="dialog" aria-modal="true" aria-labelledby="win-title"><div class="modal-card compact-card"><div class="win-stars">✦ ✦ ✦</div><h2 id="win-title">棋盘清空！</h2><p id="win-detail"></p><button id="next-button" class="primary">下一关</button><button id="win-home" class="secondary">返回主页</button></div></section>
+    <section id="fail-screen" class="modal-screen" hidden role="dialog" aria-modal="true" aria-labelledby="fail-title"><div class="modal-card compact-card"><div class="fail-symbol">♡</div><h2 id="fail-title">出口被挡住了</h2><p>先移走前方箭头，再来挑战。<br>重试免费，不需要看广告。</p><button id="retry-button" class="primary">重新挑战</button><button id="fail-home" class="secondary">返回主页</button></div></section>
+    <section id="confirm-screen" class="modal-screen" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-title"><div class="modal-card compact-card"><h2 id="confirm-title">清除本地进度？</h2><p>仅清除本游戏的关卡与挑战记录，其他网站数据和音乐设置不会改变。此操作无法撤销。</p><button id="confirm-reset" class="primary">确认清除</button><button id="cancel-reset" class="secondary">取消</button></div></section>
+    <section id="exit-screen" class="screen exit-screen" hidden><div><h1>下次再来挑战</h1><p>已退出网页试玩，您可以关闭此页面。</p><button id="return-button" class="primary">返回欢迎页</button></div></section>
+    <div id="toast" hidden role="status"></div><div id="accessible-status" class="sr-only" aria-live="polite"></div>
+  </main>
+  <audio id="bgm" src="./assets/audio/bgm.mp3" loop preload="none"></audio>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
